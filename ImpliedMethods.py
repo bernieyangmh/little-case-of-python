@@ -18,7 +18,7 @@ class Vector:
 
     def __add__(self, other):
         """Return sum of two vectors."""
-        if len(self) != len(other): # relies on __len__ method
+        if len(self) != len(other):  # relies on __len__ method
             raise ValueError('dimensions must agree')
             result = Vector(len(self))
             for j in range(len(self)):
@@ -32,8 +32,8 @@ class Vector:
 
     def __ne__(self, other):
         """Return True if vector differs from other."""
-        return not self == other # rely on existing__eq__definition
+        return not self == other  # rely on existing__eq__definition
 
     def __str__ (self):
         """Produce string representation of vector."""
-        return '<' + str(self._coords)[1:-1] + '>' # adapt list representation
+        return '<' + str(self._coords)[1:-1] + '>'  # adapt list representation
