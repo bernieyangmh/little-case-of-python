@@ -37,3 +37,7 @@ class Vector:
     def __str__ (self):
         """Produce string representation of vector."""
         return '<' + str(self._coords)[1:-1] + '>'  # adapt list representation
+
+    def __cmp__(self, other):
+        """it will return -1,0,1, not a bool value"""
+        pass
