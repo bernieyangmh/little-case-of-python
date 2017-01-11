@@ -1,4 +1,16 @@
+# -*- coding: utf-8 -*-
 
+"""
+    Draw Line Problem
+    The work is done by the recursive draw interval function.
+This function draws the sequence of minor ticks within some
+interval, based upon the length of the interval’s central tick.
+We rely on the intuition shown at the top of this page, and
+with a base case when L = 0 that draws nothing.For L ≥ 1, the
+first and last steps are performed by recursively calling
+draw interval(L − 1).The middle step is performed by calling
+the function draw line(L).
+"""
 x = 0
 
 
@@ -40,3 +52,7 @@ num of appear
 2 - 8
 1 - 16
 '''
+
+#####################################################
+
+"""There's different function about recursion in 'SeachMethods', is 'binary_search'. """

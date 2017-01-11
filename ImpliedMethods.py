@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 class Vector:
     """Represent a vector in a multidimensional space."""
     def __init__(self, d):

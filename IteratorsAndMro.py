@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 class SequenceIterator:
     """An iterator for any of Python s sequence types."""
     def __init__(self, sequence):

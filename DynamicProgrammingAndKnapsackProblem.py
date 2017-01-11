@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 def max_val(w, v, i, aw):
     print('max_val called with:', i, aw)
     global numCalls
