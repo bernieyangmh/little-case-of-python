@@ -24,3 +24,27 @@ def binary_search(data, target, low, high):
 
         else:
             return binary_search(data, target, mid+1, high)
+
+"""
+    To prove this claim, a crucial fact is that with each recursive call the number of candidate entries still to be
+searched is given by the value
+                                            high−low+1
+Moreover, the number of remaining candidates is reduced by at least one half
+with each recursive call. Specifically, from the definition of mid, the number of remain- ing candidates is either
+
+                                (mid−1)−low+1 = └low+high┘/2 − low <= (high−low+1)/2
+                    or
+                                high−(mid+1)+1 = high − └low+high┘/2 <= (high−low+1)/2
+
+    Initially, the number of candidates is n; after the first call in a binary search, it is at most n/2; after the
+second call, it is at most n/4; and so on. In general, after the jth call in a binary search, the number of candidate
+entries remaining is at most n/2**j. In the worst case (an unsuccessful search), the recursive calls stop when there are
+no more candidate entries. Hence, the maximum number of recursive calls performed, is the smallest integer r such that
+
+                                n/2**r < 1
+    In other words (recalling that we omit a logarithm’s base when it is 2), r > log n.
+Thus, we have
+                                r = └logN┘ + 1
+
+which implies that binary search runs in O(logN) time.
+"""
