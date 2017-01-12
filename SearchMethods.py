@@ -25,7 +25,8 @@ def binary_search(data, target, low, high):
         else:
             return binary_search(data, target, mid+1, high)
 
-"""
+
+binary_search_summary = """
     To prove this claim, a crucial fact is that with each recursive call the number of candidate entries still to be
 searched is given by the value
                                             high−low+1

@@ -1,6 +1,15 @@
 # -*- coding: utf-8 -*-
 
 """
+  The designers of Python made an intentional decision to limit recursion, typical default value is 1000.
+You can be dynamically reconfigured to change the default recursive limit.
+    import sys
+    default_limit = sys.getrecursionlimit()
+    sys.getrecursionlimit(99999)
+
+"""
+
+draw_line_instruction = """
     Draw Line Problem
     The work is done by the recursive draw interval function.
 This function draws the sequence of minor ticks within some
@@ -44,7 +53,7 @@ def draw_rule(num_inches, major_length):
 
 draw_rule(1, 6)
 
-draw_line_res = '''
+draw_line_summary = '''
 number of appear digit
 5 - 1
 4 - 2
@@ -79,6 +88,78 @@ def disk_usage(path):
     print('{0: < 7}'.format(total), path)
     return total
 
-disk_usage_res = """    a file system is an implicit example of a data structure known as a tree, and our disk usage
+disk_usage_summary = """    a file system is an implicit example of a data structure known as a tree, and our disk usage
                     algorithm is really a manifestation of a more general algorithm known as a tree traversal.
                     """
+
+#####################################################
+fibonacci_instruction = """
+    Notice that after computing F(n−2), the call to compute F(n−1) requires its own recursive call to compute F(n−2), as
+it does not have knowledge of the value of F(n−2) that was computed at the earlier level of recursion. That is duplicate
+work. Worse yet, both of those calls will need to recompute the value of F(n−3), as will the computation of F(n−1). This
+snowballing effect is what leads to the exponential running time of bad recursion.
+    The bad fibonacci function uses exponential time. We claim that the execution of function efficient fibonacci(n)
+takes O(n) time. Each recursive call to good fibonacci decreases the argument n by 1; therefore, a recursion trace
+includes a series of n function calls. Because the non-recursive work for each call uses constant time, the overall
+computation executes in O(n) time.
+"""
+
+
+def slow_fibonacci(n):
+    """Return the nth Fibonacci number."""
+    if n <= 1:
+        return n
+    else:
+        return slow_fibonacci(n-2) + slow_fibonacci(n-1)
+
+
+def efficient_fibonacci(n):
+    """Return pair of Fibonacci numbers, F(n) and F(n-1)."""
+    if n <= 1:
+        return n, 0
+    else:
+        (a, b) = efficient_fibonacci(n-1)
+        return a+b, a
+
+
+#####################################################
+
+power_instruction = """
+    Slow_power call to this version of power(x,n) runs in O(n) time.
+    efficient_power perform significantly fewer operations by computing power(x,└n/2┘) as a partial result, and then
+multiplying it by itself.
+    The efficient_power function results in O(logN) recursive calls
+"""
+
+
+def slow_power(x, n):
+    """Compute the value x**n for integer n."""
+    if n == 0:
+        return 1
+    else:
+        return x * slow_power(x, n-1)
+
+
+def efficient_power(x, n):
+    """Compute the value x**n for integer n."""
+    if n == 0:
+        return 1
+    else:
+        partial = efficient_power(x, n//2)
+        result = partial * partial
+        if n % 2 == 1:
+            result *= x
+        return result
+
+#####################################################
+
+
+def reverse(S, start, stop):
+    """Reverse elements in implicit slice S[start:stop]."""
+    if start < stop - 1:
+        S[start], S[stop-1] = S[stop-1], S[start]
+        reverse(S, start + 1, stop-1)
+
+reverse_summary = """
+    Total of 1+└n/2┘ recursive calls.the entire process runs in O(n) time.
+"""
