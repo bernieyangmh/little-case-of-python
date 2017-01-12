@@ -132,34 +132,51 @@ multiplying it by itself.
 """
 
 
-def slow_power(x, n):
+def slow_power(x_power, n):
+    """Compute the value x_power**n for integer n."""
+    if n == 0:
+        return 1
+    else:
+        return x_power * slow_power(x_power, n-1)
+
+
+def efficient_power(x_power, n):
     """Compute the value x**n for integer n."""
     if n == 0:
         return 1
     else:
-        return x * slow_power(x, n-1)
-
-
-def efficient_power(x, n):
-    """Compute the value x**n for integer n."""
-    if n == 0:
-        return 1
-    else:
-        partial = efficient_power(x, n//2)
+        partial = efficient_power(x_power, n//2)
         result = partial * partial
         if n % 2 == 1:
-            result *= x
+            result *= x_power
         return result
 
 #####################################################
 
 
-def reverse(S, start, stop):
-    """Reverse elements in implicit slice S[start:stop]."""
+def reverse(s, start, stop):
+    """Reverse elements in implicit slice s[start:stop]."""
     if start < stop - 1:
-        S[start], S[stop-1] = S[stop-1], S[start]
-        reverse(S, start + 1, stop-1)
+        s[start], s[stop-1] = s[stop-1], s[start]
+        reverse(s, start + 1, stop-1)
 
 reverse_summary = """
     Total of 1+└n/2┘ recursive calls.the entire process runs in O(n) time.
 """
+
+
+reverse_iterative_instruction = """
+    A recursion is a tail recursion if any recursive call that is made from one context is the very last operation in
+that context, with the return value of the recursive call (if any) immediately returned by the enclosing recursion.Any
+tail recursion can be reimplemented nonrecursively by enclosing the body in a loop for repetition, and replacing a
+recursive call with new parameters by a reassignment of the existing parameters to those values.
+"""
+
+
+def reverse_iterative(s):
+    """Reverse elements in sequence s."""
+    start, stop = 0, len(s)
+    while start < stop - 1:
+        s[start], s[stop-1] = s[stop-1], s[start]
+        start, stop = start + 1, stop - 1
+
