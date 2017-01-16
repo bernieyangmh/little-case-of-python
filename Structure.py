@@ -48,6 +48,30 @@ class DynamicArray:
         """Return new array with capacity c."""
         return (c * ctypes.py_object)()
 
+    def remove(self, value):
+        """Remove first occurrence of value (or raise ValueError)"""
+        for k in range(self._n):
+            if self._A[k] == value:
+                for j in range(k, self._n - 1):         # shift others to fill gap
+                    self._A[j] = self._A[j + 1]
+                self._A[self._n - 1] = None             # help garbage collection
+                self._n -= 1
+                return
+        raise ValueError('value not found')
+
+    def insert(self, k, value):
+        """Insert value at index k, shifting subsequent values rightward."""
+        if self._n == self._capacity:                   # not enough room
+            self._resize(2 * self._capacity)            # so double capacity
+        for j in range(self._n, k, -1):                 # shift rightmost first
+            self._A[j] = self._A[j-1]
+        self._A[k] = value                              # store newest element
+        self._n += 1
+
+
+
+
+
 DynamicArray_summary = """
     Let us assume that one cyber-dollar is enough to pay for the execution of each append operation in S, excluding
 the time spent for growing the array. Also, let us assume that growing the array from size k to size 2k requires k
