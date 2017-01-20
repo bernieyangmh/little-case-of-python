@@ -3,7 +3,7 @@
 """
 3.0版本 izip()———>zip(), izip_longest()--->zip_longest()
 """
-from itertools import *
+from Itertools import *
 
 print('{0:-<10} {1} {2:->10}'.format('-', 'product', '-'))
 # 笛卡尔积
