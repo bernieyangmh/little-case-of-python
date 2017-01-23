@@ -1107,7 +1107,10 @@ class ExpressionTree(LinkedBinaryTree):
 
 
 def build_expression_tree(tokens):
-    """Returns an ExpressionTree based upon by a tokenized expression."""
+    """
+    Returns an ExpressionTree based upon by a tokenized expression.
+    算术表达式转化为树
+    """
     S=[]
     for t in tokens:
         if t in '+-x*/':
