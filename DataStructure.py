@@ -909,7 +909,7 @@ class LinkedBinaryTree(BinaryTree):
             t2._size = 0
 
     def perorder(self):
-        """前序遍历"""
+        """前序遍历 根左右"""
         if not self.is_empty():
             for p in self._subtree_preorder(self.root()):
                 yield p
@@ -922,7 +922,7 @@ class LinkedBinaryTree(BinaryTree):
 
 
     def postorder(self):
-        """后序遍历"""
+        """后序遍历 左右根"""
         if not self.is_empty():
             for p in self._subtree_postorder(self.root()):
                 yield p
@@ -934,7 +934,7 @@ class LinkedBinaryTree(BinaryTree):
         yield p
 
     def inorder(self):
-        """中序遍历"""
+        """中序遍历 左根右"""
         if not self.is_empty():
             for p in self._subtree_inorder(self.root()):
                 yield p
@@ -958,3 +958,59 @@ class LinkedBinaryTree(BinaryTree):
                 yield p
                 for c in self.children(p):
                     fringe.enqueue(c)
+
+    def positions(self):
+        return self.inorder()
+
+def parenthetic(T, p):
+    """Print parenthesized representation of subtree of T rooted at p."""
+    print(p.element(), end='')
+    if not T.is_leaf(p):
+        first_time = True
+        for c in T.children(p):
+            sep = '('if first_time else  ','
+            print(sep, end='')
+            first_time = False
+            parenthetic(T, c)
+        print(')', end='')
+
+"""
+    The template method pattern describes a generic computation mechanism that can be specialized for a particular
+application by redefining certain steps. To allow customization, the primary algorithm calls auxiliary functions known
+as hooks at designated steps of the process.
+"""
+
+class EulerTour:
+    def __init__(self, tree):
+        self._tree =tree
+
+    def tree(self):
+        return self._tree
+
+    def execute(self):
+        if len(self._tree) > 0:
+            return self._tour(self._tree.root(), 0, [])
+
+    def _tour(self, p, d, path):
+        """
+        path list of indices of children on path from root to p
+        :param p:       Position of current node being visited
+        :param d:       depth of p in the tree
+        :param path:    path list of indices of children on path from root to p
+        :return:
+        """
+        self._hook_previsit(p, d, path)
+        results = []
+        path.append(0)
+        for c in self._tree.childer(p):
+            results.append(self._tour(c, d+1, path))
+            path[-1] += 1
+        path.pop()
+        answer = self._hook_previsit(p, d, path, results)
+        return answer
+
+    def _hook_previsit(self, p, d, path):
+        pass
+
+    def _hook_postvisit(self, p, d, path, results):
+        pass
