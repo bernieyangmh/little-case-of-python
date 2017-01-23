@@ -1014,3 +1014,93 @@ class EulerTour:
 
     def _hook_postvisit(self, p, d, path, results):
         pass
+
+
+class PreorderPrintIndentedTour(EulerTour):
+    def _hook_previsit(self, p, d, path):
+        print(2*d*'' + str(p.element))
+
+
+class PreorderPrintIndententedLabeledTour(EulerTour):
+    def _hook_previsit(self, p, d, path):
+        label = '.'.join(str(j + 1) for j in path)
+        print(2*d*'' + label, p.element())
+
+
+class ParenthesizeTour(EulerTour):
+    def _hook_previsit(self, p, d, path):
+        if path and path[-1] > 0:
+            print(',', end='')
+        print(p.element(), end='')
+        if not self.tree().is_leaf(p):
+            print('(', end='')
+
+    def _hook_postvisit(self, p, d, path, results):
+        if not self.tree().is_leaf(p):
+            print(')', end='')
+
+class BinaryEulerTour(EulerTour):
+    """Abstract base class for performing Euler tour of a binary tree"""
+
+    def _tour(self, p, d, path):
+        results = [None, None]
+        self._hook_previsit(p, d, path)
+        if self._tree.left(p) is not None:
+            path.append(0)
+            results[0] = self._tour(self._tree.left(p), d+1, path)
+            path.pop()
+        self._hook_invisit(p, d, path)
+        if self._tree.right(p) is not None:
+            path.append(1)
+            results[1] = self._tour(self._tree.right(p), d+1, path)
+            path.pop()
+        answer = self._hook_postvisit(p, d, path, results)
+        return answer
+
+class ExpressionTree(LinkedBinaryTree):
+    """for display"""
+
+    def __init__(self, token, left=None, right=None):
+        super().__init()
+        if not isinstance(token, str):
+            raise TypeError('TOKEN MUST BE A STRING')
+        self._add_root(token)
+        if left is not None:
+            if token not in '+-*x/':
+                raise ValueError('token must be a valid operator')
+            self._attch(self.root(), left, right)
+
+    def __str__(self):
+        pieces = []
+        self._parenthesize_recur(self.root(), pieces)
+        return ''.join(pieces)
+
+    def _parenthesize_recur(self, p, result):
+        if self.is_leaf(p):
+            result.append(str(p.element()))
+        else:
+            result.append('(')
+            self._parenthesize_recur(self.left(p), result)
+            result.append(p.element())
+            self._parenthesize_recur(self.right(p), result)
+            result.append(')')
+
+    def evaluate(self):
+        return self._evaluate_recur(self.root())
+
+    def _evaluate_recur(self, p):
+        if self.is_leaf(p):
+            return float(p.element())
+
+        else:
+            op = p.element()
+            left_val = self._evaluate_recur(self.left(p))
+            right_val = self._evaluate_recur(self.right(p))
+            if op == '+':
+                return left_val + right_val
+            elif op == '-':
+                return left_val - right_val
+            elif op == '/':
+                return left_val / right_val
+            else:
+                return left_val * right_val
