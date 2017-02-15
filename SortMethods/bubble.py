@@ -22,3 +22,11 @@ while swapped
 
 平均时间O(n**2) 最短时间O(n) 最长时间O(n**2) 空间O(1) 稳定
 """
+
+def bubble(lists):
+    count = len(lists)
+    for i in range(0, count):
+        for j in range(i+1,count):
+            if lists[i] > lists[j]:
+                lists[i], lists[j] = lists[j], lists[i]
+    return lists

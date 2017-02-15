@@ -22,3 +22,20 @@ for each (unsorted) partition
 
 平均时间O(Nlog2N) 最短时间O(Nlog2N) 最长时间O(n**2) 空间O(Nlog2N) 不稳定
 """
+
+def quick_sort(lists, left, right):
+    if left >= right:
+        return lists
+    k = lists[left]
+    low = left
+    hight = right
+    while left < right:
+        while left < right and lists[right] >= k:
+            right -= 1
+        lists[left] = lists[right]
+        while left < right and lists[right] <= k:
+            left += 1
+        lists[right] = lists[left]
+
+
+
