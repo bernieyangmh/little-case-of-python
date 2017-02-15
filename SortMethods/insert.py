@@ -36,6 +36,9 @@ def insertion_sort(s):
         s[j] = cur                          # 获取游标值
 
 
+s = [3, 5, 1, 2, 7, 6, 3, 0, 9]
+insertion_sort(s)
+print(s)
 
 
 
