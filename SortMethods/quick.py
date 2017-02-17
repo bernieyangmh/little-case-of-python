@@ -41,6 +41,13 @@ def sub_sort(s, low, high):
 
 
 def quick_sort(s, low, high):
+    """
+
+    :param s:
+    :param low:     0
+    :param high:    s的最?右index
+    :return:
+    """
     if low < high:
         key_index = sub_sort(s, low, high)
         quick_sort(s, low, key_index)
@@ -52,3 +59,4 @@ if __name__ == '__main__':
     print(s)
     quick_sort(s, 0, len(s) - 1)
     print(s)
+
